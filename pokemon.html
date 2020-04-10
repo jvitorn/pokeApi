@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<style>
+    .container{
+        padding: 5rem;
+    }
+    .gbc-color{
+        background-color:lightyellow;
+    }
+    .gbc-tela{
+        background-color: #4d5762;
+        color:whitesmoke;
+        height: 450px;
+        border-radius: 1.5rem;
+        overflow: hidden;
+
+
+    }
+    .gbc-buttons-laterals{
+        background-color:#4d5762 ;
+        height:250px;
+        border-radius: 4rem !important;
+        margin-bottom: 0;
+    }
+    .gbc-buttons-front:hover{
+        background-color: teal;
+        transition: height 0.2s,box-shadow 0.2s;
+        height: 75px;
+    }
+    .gbc-buttons-front{
+        background-color:#4d5762 ;
+        height: 70px;
+        border-radius: 4rem !important;
+        color:whitesmoke;
+        align-items: center;
+    }
+    .row-buttons{
+        margin-top: -170px;
+    }
+    .gbc-buttons-button{
+        background-color:#4d5762 ;
+        height: 90px;
+        border-radius: 4rem !important;
+        align-items: center;
+        align-content: center;
+        overflow: hidden;
+    }
+    .gbc-buttons-button:hover {
+        height: 92px;
+        box-shadow: whitesmoke;
+        background-color: white;
+        transition: height 0.2s,box-shadow 0.2s;
+
+    }
+    .gbc-logo-text{
+        color:#4d5762;
+        line-height: 1.2;
+        font-size: small;
+    }
+</style>
+<body class="gbc-color" ng-app="pokeApi" ng-controller="pokemonController">
+<div class="container">
+    <div class="row mt-5  gbc-tela text-center">
+        <div class="col-12 col-md-12">
+            <h2 class="text-center">{{pokemon.name | uppercase}}</h2>
+        </div>
+        <div class="col-md-12">
+            <img class="col-12 col-sm-12 col-md-2" src="{{pokemon.sprites.front_default}}" alt="sprite Front">
+            <img src="{{pokemon.sprites.back_default}}" alt="sprite Front">
+            <img src="{{pokemon.sprites.front_shiny}}" alt="sprite Front">
+            <img src="{{pokemon.sprites.back_shiny}}" alt="sprite Front">
+        </div>
+        <div class="col-md-4 p-3">
+            <div class="shadow p-5">
+                <h5 class="h5 text-info">Habilities</h3>
+                <p class="lead" ng-repeat="states in pokemon.abilities">{{states.ability.name}}</p>
+            </div>
+        </div>
+        <div class="col-md-4 p-3" ng-controller="evolutionController">
+            <div class="shadow p-5">
+                <h5 class="h5 text-info">Habbtat</h3>
+                <p class="lead">{{habitat.habitat.name}}</p>
+            </div>
+        </div>
+        <div class="col-md-4 p-3">
+            <div class="shadow p-5">
+                <h5 class="h5 text-info">Types</h3>
+                <p class="lead" ng-repeat="states in pokemon.types">{{states.type.name}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row p-3">
+        <div class="col-md-4 offset-4">
+            <p class="text-center lead p-1">GameMoyColor - By @Jvitorn</p>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-1 offset-md-1 gbc-buttons-laterals rounded">
+            
+        </div>
+        <div class="col-md-1 offset-md-8 gbc-buttons-button rounded"  ng-mouseover="proximoPokemon()">
+
+        </div>
+    </div>
+    <div class="row  row-buttons p-2">
+        <div class="col-md-3  gbc-buttons-front rounded">
+            
+        </div>
+        <div class="col-md-1 offset-md-6 gbc-buttons-button rounded"  ng-mouseover="anteriorPokemon()">
+            
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-3  offset-4 gbc-buttons-front" ng-mouseover="alertaVoltarPagina()">
+        </div>
+    </div>
+</div>
+<script>
+var app = angular.module('pokeApi', []);
+const api = 'https://pokeapi.co/api/v2/';
+app.controller('pokemonController', function($scope,$http) {
+    const endpoint ="pokemon/"
+    let pokedex = localStorage.getItem("Id");
+    const link = api+endpoint+pokedex;
+    $scope.pokemon = [];
+    $http.get(link)
+        .then(function(retorno){
+            $scope.pokemon = retorno.data;
+            localStorage.setItem("Id",$scope.pokemon.id);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    $scope.alertaVoltarPagina = function(){
+        alert('voce vai voltar para a pagina anterior');
+        window.location.href='national.html';
+    }
+    $scope.proximoPokemon = function(){
+        alert('Voce pode ir para o proximo pokemon tocando aqui');
+        let idPokemon = parseInt(localStorage.getItem("Id"));
+        let proximoPokemon = idPokemon + 1;
+        if(proximoPokemon >=721){
+            alert('Nao existe esse pokemon na pokedex')
+          proximoPokemon--;
+       }
+        localStorage.setItem("Id",proximoPokemon);
+        window.location.href='pokemon.html';
+    }
+    $scope.anteriorPokemon = function(){
+        alert('Voce pode voltar para o pokemon anterior tocando aqui');
+        let idPokemon = parseInt(localStorage.getItem("Id"));
+        let proximoPokemon = idPokemon - 1;
+        if(proximoPokemon <= 0){
+            alert('Nao existe esse pokemon na pokedex')
+          proximoPokemon++;
+       }
+        localStorage.setItem("Id",proximoPokemon);
+       
+        window.location.href='pokemon.html';
+        console.log(pokedex);
+    }
+});
+app.controller('evolutionController',function($scope,$http) {
+    const endpoint ='pokemon-species/';
+    const idPokedex = localStorage.getItem("Id");
+    const link = api+endpoint+idPokedex;
+    $scope.habitat = [];
+    $http.get(link)
+        .then(function(retorno){
+            $scope.habitat = retorno.data;
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+});
+</script>
+
+
+</body>
+</html>

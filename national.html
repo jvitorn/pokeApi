@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body  ng-app="pokeApi" ng-controller="testeController">
+<div class="container">
+    <h1 class="text-center">National Dex</h1>
+    <div class="row p-3 mt-4">
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-info" href="index.html">Ir para a Home</a>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <input ng-model="filtro" class="form-control" placeholder="Digite a Regiao da Pokedex">
+            </div>
+        </div>
+        <div class="col-12">
+            <!-- <form action="pokemon.html" method="GET"> -->
+                <table class="table">
+                <tr>
+                    <td>Numero na Dex</td>
+                    <td>Nome do pokemon</td>
+                    <td>Ver Mais</td>
+                </tr>
+                <tr ng-repeat ="pokedex in pokemon.pokemon_entries | filter: filtro ">
+                    <td>{{pokedex.entry_number}}</td>
+                    <td>{{pokedex.pokemon_species.name}}</a></td>
+                    <td><button class="btn btn-info" ng-click='pokemonSelecionado(pokedex)'>Ver Mais </button> <input type="hidden" id="{{pokedex.entry_number}}" ng-model="pokemonVisualisar" name="pokemonVisualisar" value="{{pokedex.pokemon_species.name}}"></td>
+                </tr>
+                </table>
+            </form>
+        </div>
+        <div class="col-12">
+            <a class="btn btn-info" href="kanto.html">Ir para a NationalDex</a>
+        </div>
+    </div>
+</div>
+<script>
+var app = angular.module('pokeApi', []);
+app.controller('testeController', function($scope,$http) {
+    // https://pokeapi.co/api/v2/pokedex/1/
+    const api = 'https://pokeapi.co/api/v2/';
+    const endpoint = 'pokedex/'+localStorage.getItem('Pokedex');
+
+    $scope.pokemon = [];
+    $scope.pokemonSelecionado = function (pokemon){
+            let idPokemonEscolhido = pokemon.entry_number;
+            let pokemonEscolhido = pokemon.pokemon_species.name;
+            const urlIdVerdadeiro = api+'pokemon/'+pokemonEscolhido;
+            localStorage.setItem("Pokemon",pokemonEscolhido);
+        $http.get(urlIdVerdadeiro)
+             .then(function(retorno){
+                $scope.idVerdadeiroPokemon = retorno.data.id;
+                window.location.href='pokemon.html';
+                localStorage.setItem("Id",$scope.idVerdadeiroPokemon);
+             })
+             .catch(function(error){
+                console.log(error);
+             });
+        
+       
+      
+    }
+    
+    $scope.link = api+'pokemon/';
+
+    $http.get(api+endpoint)
+        .then(function(retorno){
+            $scope.pokemon = retorno.data;
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    
+});
+</script>
+
+
+</body>
+</html>
