@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<style>
+    .container{
+        padding: 5rem;
+    }
+    .gbc-color{
+        background-color:lightyellow;
+    }
+    /* // Extra small devices (portrait phones, less than 576px)    */
+    @media (min-width: 575.98px) {
+        .container-fluid{
+            margin-top:50px;
+            padding: 4rem;
+        } 
+        .mt-6{
+            margin-top:8.5rem;
+        } 
+        .gbc-tela{
+            padding:1rem;
+            background-color: #4d5762;
+            color:whitesmoke;
+            height: 750px;
+            border-radius: 1.5rem;
+            overflow: auto;
+        }
+        .gbc-buttons-laterals{
+            background-color:#4d5762 ;
+            height:200px;
+            border-radius: 4rem !important;
+            margin-bottom: 0;
+        }
+        .gbc-buttons-front{
+            background-color:#4d5762 ;
+            height: 70px;
+            border-radius: 4rem !important;
+            color:whitesmoke;
+            align-items: center;
+            margin-top:7px;
+        }
+        .gbc-buttons-button{
+            background-color:#4d5762 ;
+            height: 75px;
+            border-radius: 5rem !important;
+            align-items: center;
+            align-content: center;
+            overflow: hidden;
+        }  
+    }
+    /* // Small devices (landscape phones, 576px and up) */
+    @media (min-width: 576px) and (max-width: 767.98px) {
+        .gbc-tela{
+            background-color: #4d5762;
+            color:whitesmoke;
+            height: 300px;
+            border-radius: 1.5rem;
+            overflow: auto;
+        }
+     }
+    /* // Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) and (max-width: 1199.98px) { 
+        .gbc-tela{
+            background-color: #4d5762;
+            color:whitesmoke;
+            height: 500px;
+            border-radius: 1.5rem;
+            overflow: auto;
+        }
+    }
+    /* // Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) and (max-width: 1199.98px) { 
+         .gbc-tela{
+            background-color: #4d5762;
+            color:whitesmoke;
+            height: 500px;
+            border-radius: 1.5rem;
+            overflow: auto;
+        }    
+     }
+    /* // Extra large devices (large desktops, 1200px and up) */
+    @media (min-width: 1200px) { 
+        .gbc-tela{
+            background-color: #4d5762;
+            color:whitesmoke;
+            height: 510px;
+            border-radius: 1.5rem;
+            overflow: auto;
+        }
+        .gbc-buttons-laterals{
+            background-color:#4d5762 ;
+            height:250px;
+            border-radius: 4rem !important;
+            margin-bottom: 0;
+        }
+        .gbc-buttons-front{
+            background-color:#4d5762 ;
+            height: 70px;
+            border-radius: 4rem !important;
+            color:whitesmoke;
+            align-items: center;
+        }
+        .gbc-buttons-button{
+            background-color:#4d5762 ;
+            height: 90px;
+            border-radius: 4rem !important;
+            align-items: center;
+            align-content: center;
+            overflow: hidden;
+        }    
+    }
+    .gbc-buttons-button:hover{
+        background-color: teal;
+        transition: height 0.2s,box-shadow 0.2s;
+        height: 75px;
+    }      
+    .row-buttons{
+        margin-top: -170px;
+    }
+    .bgc-margin{
+        margin-top: -65px;
+    }
+    .gbc-buttons-button:hover {
+        height: 92px;
+        box-shadow: whitesmoke;
+        background-color: white;
+        transition: height 0.2s,box-shadow 0.2s;
+
+    }
+    .gbc-logo-text{
+        color:#4d5762;
+        line-height: 1.2;
+        font-size: small;
+    }
+</style>
+<body class="" ng-app="pokeApi" ng-controller="pokemonController">
+<div class="container-fluid gbc-color">
+    <div class="row mt-5  gbc-tela  shadow text-center">
+        <div class="col-12 col-md-12 col-xl-12">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <h2 class="text-center text-white display-2">{{pokemon.name}}</h2>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <img class="col-md-6 img-fluid" src="{{pokemon.sprites.front_default}}" alt="sprite Front">
+                </div>
+                <div class="col-md-4">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-danger">Habilities</h3>
+                        <p class="lead" ng-repeat="states in pokemon.abilities">{{states.ability.name}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4" ng-controller="evolutionController">
+                        <div class="shadow p-5">
+                            <h5 class="h5 text-danger">Habbtat</h3>
+                            <p class="lead">{{habitat.habitat.name}}</p>
+                        </div>
+                    </div>
+                <div class="col-md-4">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-danger">Types</h3>
+                        <p class="lead" ng-repeat="states in pokemon.types">{{states.type.name}}</p>
+                    </div>
+                </div>
+                 <div class="col-12 col-md-12 mb-2" ng-controller="evolutionController">
+                 <img class="col-md-4" src="{{pokemon.sprites.front_shiny}}" alt="sprite Front">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-white">Description</h3>
+                         <p class="lead">{{habitat.flavor_text_entries[1].flavor_text}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-controller="evolutionController">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-info">Egg groups</h3>
+                         <p class="lead" ng-repeat="groups in habitat.egg_groups">{{groups.name}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-controller="evolutionController">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-info">Generation</h3>
+                         <p class="lead">{{habitat.generation.name | uppercase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-controller="evolutionController">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-white">Pokedex Numbers</h3>
+                         <p class="lead" ng-repeat="pokedexNumber in habitat.pokedex_numbers">{{pokedexNumber.pokedex.name}} : <small class="text-danger">{{pokedexNumber.entry_number}}</small></p>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-controller="evolutionController">
+                    <div class="shadow p-5">
+                        <h5 class="h5 text-white">Base Happiness</h3>
+                         <p class="lead">{{habitat.base_happiness}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-md-5 offset-4">
+            <p class="text-center lead text-white">GameMoyColor - By @Jvitorn</p>
+        </div>
+    </div>
+    <div class="row p-3 mt-6">
+        <div class="col-md-1 offset-md-1 gbc-buttons-laterals rounded shadow">
+            
+        </div>
+        <div class="col-md-1 offset-md-8 gbc-buttons-button rounded"  ng-mouseover="proximoPokemon()">
+
+        </div>
+    </div>
+    <div class="row  row-buttons p-3">
+        <div class="col-md-3  gbc-buttons-front rounded">
+            
+        </div>
+        <div class="col-md-1 offset-md-6 gbc-buttons-button rounded"  ng-mouseover="anteriorPokemon()">
+            
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-4 col-md-2   offset-4  gbc-buttons-front" ng-mouseover="">
+          
+        </div>
+        <div class="col-4 col-md-2  ml-2 gbc-buttons-front" ng-mouseover="alertaVoltarPagina()">
+        </div>
+    </div>
+    <div class="row mt-6">
+        <div class="col-4 offset-8">
+            <img src="/estatico/img/noise.png" alt="">
+        </div>
+    </div>
+</div>
+<script>
+var app = angular.module('pokeApi', []);
+const api = 'https://pokeapi.co/api/v2/';
+app.controller('pokemonController', function($scope,$http) {
+    const endpoint ="pokemon/"
+    let pokedex = localStorage.getItem("Id");
+    const link = api+endpoint+pokedex;
+    $scope.pokemon = [];
+    $http.get(link)
+        .then(function(retorno){
+            $scope.pokemon = retorno.data;
+            localStorage.setItem("Id",$scope.pokemon.id);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    $scope.alertaVoltarPagina = function(){
+        const dex = '/pokedex';
+        window.location.href=dex;
+    }
+    $scope.proximoPokemon = function(){
+       
+        let idPokemon = parseInt(localStorage.getItem("Id"));
+        let proximoPokemon = idPokemon + 1;
+        if(proximoPokemon >=721){
+          proximoPokemon--;
+       }
+        localStorage.setItem("Id",proximoPokemon);
+        const poke = '/pokemon';
+        window.location.href=poke;
+    }
+    $scope.anteriorPokemon = function(){
+      
+        let idPokemon = parseInt(localStorage.getItem("Id"));
+        let proximoPokemon = idPokemon - 1;
+        if(proximoPokemon <= 0){
+            alert('Nao existe esse pokemon na pokedex')
+          proximoPokemon++;
+       }
+        localStorage.setItem("Id",proximoPokemon);
+       
+        window.location.href='/pokemon';
+        console.log(pokedex);
+    }
+});
+app.controller('evolutionController',function($scope,$http) {
+    const endpoint ='pokemon-species/';
+    const idPokedex = localStorage.getItem("Id");
+    const link = api+endpoint+idPokedex;
+    $scope.habitat = [];
+    $http.get(link)
+        .then(function(retorno){
+            $scope.habitat = retorno.data;
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+});
+</script>
+
+</body>
+</html>

@@ -3,29 +3,29 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <body  ng-app="pokeApi" ng-controller="pokeController">
-<div class="container-fluid">
+<div class="container">
     <div class="row mt-5">
-        <div class="row">
-            <div class="col-12">
-                <a class="btn btn-info" href="national.html">Ir para a NationalDex</a>
-            </div>
-        </div>
-        <div class="col-12">
+        <h3 class="col-12 col-sm-12 col-md-10 col-xl-12 display-4 mb-3 text-center text-danger">Pokedex</h3>
+        <div class="col-6 col-md-6 col-xl-12">
             <div class="form-group">
                 <input ng-model="filtro" class="form-control" placeholder="Digite a Regiao da Pokedex">
             </div>
         </div>
-        <div class="col-12">
-            <table class="table">
-            <tr>
-                <td>Name</td>
-                <td>Url</td>
-            </tr>
-            <tr ng-repeat ="pokedex in pokemon.results | filter: filtro ">
-                <td>{{pokedex.name |uppercase }}</td>
-                <td><button class="btn btn-info" ng-click='pokedexSelecionada(pokedex)'>Ver Mais </button></td>
-            </tr>
-            </table>
+        <div class="col-md-12 col-12 col-xl-12">
+            <div class="table-responsive table-responsive-md table-responsive-xl">
+                <table class="table  table-bordered table-hover">
+                <thead class="col-12 bg-dark text-white">
+                    <th>Name</th>
+                    <th>Url</th>
+                </thead>
+                <tbody class="col-12">
+                    <tr ng-repeat ="pokedex in pokemon.results | filter: filtro ">
+                        <th>{{pokedex.name |uppercase }}</th>
+                        <th><button class=" btn btn-block btn-outline-danger" ng-click='pokedexSelecionada(pokedex)'>Ver Mais</button></th>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
         </div>
         
     </div>
@@ -46,7 +46,7 @@ app.controller('pokeController', function($scope,$http) {
     $scope.pokedexSelecionada = function (pokedex){
         let nomePokedex = pokedex.name;
         localStorage.setItem("Pokedex",nomePokedex);
-        window.location.href='national.html';
+        window.location.href='/pokedex';
       
     }
    
